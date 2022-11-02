@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.qf.mapper.SheetMapper" >
+
+    <resultMap id="sheetMap" type="com.qf.pojo.Sheet" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="sheet_name" property="sheetName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="baseSql" >
+        select id, sheet_name
+        from tb_sheet
+    </sql>
+
+    <!-- 查询所有歌单 -->
+    <select id="findAll" resultMap="sheetMap">
+        <include refid="baseSql"></include>
+    </select>
+
+    <!-- 添加歌单 -->
+    <insert id="addSheet">
+        insert into tb_sheet(sheet_name)
+        <trim prefix="values (" suffix=")">
+            <if test="sheetName != null">
+                #{sheetName}
+            </if>
+        </trim>
+    </insert>
+
+</mapper>
